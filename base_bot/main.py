@@ -57,7 +57,8 @@ pyrogram_client_data = TypedDict(
         "plugins": TypedDict(
             "plugins_data",
             {
-                "include": list[str],
+                "root": str,
+                "include": list[str] | None,
                 "exclude": list[str] | None,
             },
         ),
