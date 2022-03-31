@@ -1,0 +1,74 @@
+#MIT License
+#
+#Copyright (c) 2022 DevOps117
+#
+#Permission is hereby granted, free of charge, to any person obtaining a copy
+#of this software and associated documentation files (the "Software"), to deal
+#in the Software without restriction, including without limitation the rights
+#to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#copies of the Software, and to permit persons to whom the Software is
+#furnished to do so, subject to the following conditions:
+#
+#The above copyright notice and this permission notice shall be included in all
+#copies or substantial portions of the Software.
+#
+#THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+#OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+#SOFTWARE.
+
+
+default: &default
+  plugins:
+    root: 'plugins.user_plugins'
+    include: Null
+    exclude: Null
+  wheel_userids:
+    - 1698923450
+  environment_variables:
+    TELEGRAM_API_ID: 'TELEGRAM_API_ID'
+    TELEGRAM_API_HASH: 'TELEGRAM_API_HASH'
+    TELEGRAM_BOT_TOKEN: Null
+
+clients:
+  - {session_name: 'owo', <<: *default}
+#  - {session_name: 'kjb2k124vk2jv41214bj2k4b12kb12k4v2', <<: *default} # session_name can be used for session string
+
+# Notes:
+#
+# All plugin root directories should be in plugins directory
+
+# Examples:
+#
+### Your own client sets ###
+#custom:
+#  <<: *default # This line ensures inheritance from default client set
+#  plugins:
+#    root:
+#      - 'plugins.extra_plugins'
+#    include:
+#      - 'extra_plugin'
+#    exclude:
+#      - 'unwanted'
+#  wheel_userids:
+#    - 12312421
+#    - 25235423
+#    - 21424111
+#  ...
+#
+#sessions:
+#  - {session_name: 'something', <<: *custom}
+### Your own client sets ###
+
+### A single value to modify ###
+#extra_plugins: &extra_plugins
+#  root: 'extra_plugins'
+#
+#sessions:
+#  - {session_name: 'something', plugins: *extra_plugins, <<: *default}
+# OR
+#  - {session_name: 'something', plugins: {root: 'extra_plugins'}, <<: *default}
+### A single value to modify ###
