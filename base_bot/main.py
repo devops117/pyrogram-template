@@ -69,26 +69,26 @@ pyrogram_client_data = TypedDict(
 def client_init(clients_data: list[pyrogram_client_data] = data.get("clients")) -> list[pyrogram.Client] | None:
     global pyrogram_sessions_dir # sessions directory
     
-    for session in clients_data:
+    for client_data in clients_data:
+
+        client_credentials = client_data.get("environment_variables")
         api_id, api_hash = itemgetter(
-                *itemgetter(
-                    "TELEGRAM_API_ID",
-                    "TELEGRAM_API_HASH",
-                )(session.get("environment_variables"))
+                *itemgetter("TELEGRAM_API_ID", "TELEGRAM_API_HASH")(client_credentials)
             )(os.environ)
-        if bot_token := session.get("TELEGRAM_BOT_TOKEN"):
+        if bot_token := client_credentials.get("TELEGRAM_BOT_TOKEN"):
             bot_token = os.environ.get(bot_token)
 
         client = pyrogram.Client(
-            session["session_name"],
+            client_data["session_name"],
             api_id,
             api_hash,
             bot_token=bot_token,
-            plugins=session["plugins"],
+            plugins=client_data["plugins"],
             workdir=pyrogram_sessions_dir,
         )
-        client.wheel_userids = session["wheel_userids"] # A way to feed values, can be accessed using update handler's callback(client)
 
+        # A way to feed values, can be accessed using update handler's callback(client)
+        client.wheel_userids = client_data["wheel_userids"]
         yield client
 
 
