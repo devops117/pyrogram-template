@@ -37,7 +37,7 @@ pyrogram_sessions_dir=Path("sessions")
 
 config_file=Path("config.yaml")
 yaml=YAML(typ="safe")
-data=yaml.load(config_file) # look for ./base/config.yaml
+data=yaml.load(config_file) # look for ./config.yaml
 
 CLIENTS=None
 
