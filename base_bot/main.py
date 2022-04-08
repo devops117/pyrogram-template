@@ -45,15 +45,13 @@ pyrogram_client_data = TypedDict(
     "pyrogram_client_data",
     {
         "session_name": str,
+
+        "TELEGRAM_API_ID": int,
+        "TELEGRAM_API_HASH": str,
+        "TELEGRAM_BOT_TOKEN": str | None,
+
         "wheel_userids": list[int],
-        "environment_variables": TypedDict(
-            "environment_variables",
-            {
-                "TELEGRAM_API_ID": int,
-                "TELEGRAM_API_HASH": str,
-                "TELEGRAM_BOT_TOKEN": str | None,
-            },
-        ),
+
         "plugins": TypedDict(
             "plugins_data",
             {
@@ -71,11 +69,10 @@ def client_init(clients_data: list[pyrogram_client_data] = data.get("clients")) 
     
     for client_data in clients_data:
 
-        client_credentials = client_data.get("environment_variables")
         api_id, api_hash = itemgetter(
-                *itemgetter("TELEGRAM_API_ID", "TELEGRAM_API_HASH")(client_credentials)
+                *(itemgetter("TELEGRAM_API_ID", "TELEGRAM_API_HASH")(client_data))
             )(os.environ)
-        if bot_token := client_credentials.get("TELEGRAM_BOT_TOKEN"):
+        if bot_token := client_data.get("TELEGRAM_BOT_TOKEN"):
             bot_token = os.environ.get(bot_token)
 
         client = pyrogram.Client(

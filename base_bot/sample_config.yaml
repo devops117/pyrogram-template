@@ -22,16 +22,16 @@
 
 
 default: &default
+  # Telegram environment variables
+  TELEGRAM_API_ID: 'TELEGRAM_API_ID'
+  TELEGRAM_API_HASH: 'TELEGRAM_API_HASH'
+  TELEGRAM_BOT_TOKEN: Null
+  wheel_userids:
+    - 1698923450
   plugins:
     root: 'plugins.user_plugins'
     include: Null
     exclude: Null
-  wheel_userids:
-    - 1698923450
-  environment_variables:
-    TELEGRAM_API_ID: 'TELEGRAM_API_ID'
-    TELEGRAM_API_HASH: 'TELEGRAM_API_HASH'
-    TELEGRAM_BOT_TOKEN: Null
 
 clients:
   - {session_name: 'owo', <<: *default}
