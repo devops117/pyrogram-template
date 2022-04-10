@@ -33,9 +33,9 @@ default: &default
     include: Null
     exclude: Null
 
-clients:
-  - {session_name: 'owo', <<: *default}
-#  - {session_name: 'kjb2k124vk2jv41214bj2k4b12kb12k4v2', <<: *default} # session_name can be used for session string
+clients: # session_name: {options}
+  owo: {<<: *default}
+#  kjb2k124vk2jv41214bj2k4b12kb12k4v2: {<<: *default} # session_name can be substituted for session string
 
 # Notes:
 #
@@ -44,8 +44,8 @@ clients:
 # Examples:
 #
 ### Your own client sets ###
-#custom:
-#  <<: *default # This line ensures inheritance from default client set
+#custom: &custom
+#  <<: *default # This line ensures non recursive inheritance from default client set
 #  plugins:
 #    root:
 #      - 'plugins.extra_plugins'
@@ -60,7 +60,7 @@ clients:
 #  ...
 #
 #sessions:
-#  - {session_name: 'something', <<: *custom}
+#  something: {<<: *custom}
 ### Your own client sets ###
 
 ### A single value to modify ###
@@ -68,7 +68,7 @@ clients:
 #  root: 'extra_plugins'
 #
 #sessions:
-#  - {session_name: 'something', plugins: *extra_plugins, <<: *default}
+#  something: {<<: *default, *extra_plugins}
 # OR
-#  - {session_name: 'something', plugins: {root: 'extra_plugins'}, <<: *default}
+#  something: {<<: *default, plugins: {root: 'extra_plugins'}}
 ### A single value to modify ###
