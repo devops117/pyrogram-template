@@ -23,9 +23,9 @@
 
 default: &default
   # Telegram environment variables
-  TELEGRAM_API_ID: 'TELEGRAM_API_ID'
-  TELEGRAM_API_HASH: 'TELEGRAM_API_HASH'
-  TELEGRAM_BOT_TOKEN: Null
+  telegram_api_id: 'TELEGRAM_API_ID'
+  telegram_api_hash: 'TELEGRAM_API_HASH'
+  telegram_bot_token: Null
   wheel_userids:
     - 1698923450
   plugins:

@@ -33,15 +33,10 @@ import pyrogram # pyrogram.Client
 
 logging.basicConfig(level=logging.INFO)
 
-pyrogram_sessions_dir=Path("sessions")
+PYROGRAM_SESSIONS_DIR = Path("sessions")
 
-yaml=YAML(typ="safe")
+yaml = YAML(typ="safe")
 CONFIG_DATA = yaml.load(Path("config.yaml")) # look for ./config.yaml
-
-
-class ClientStore(NamedTuple):
-    session_name: str
-    client: pyrogram.Client
 
 
 class PluginsData(TypedDict):
@@ -51,20 +46,26 @@ class PluginsData(TypedDict):
 
 
 class ClientConfigData(TypedDict):
-    TELEGRAM_API_ID: int
-    TELEGRAM_API_HASH: str
-    TELEGRAM_BOT_TOKEN: str | None
+    # Telegram environment variables
+    telegram_api_id: int
+    telegram_api_hash: str
+    telegram_bot_token: str | None = None
     wheel_userids: list[int]
     plugins: PluginsData
 
 
+class ClientStore(NamedTuple):
+    session_name: str
+    client: pyrogram.Client
+
+
 def client_create(session_name: str, client_data: ClientConfigData) -> ClientStore:
-    global pyrogram_sessions_dir # sessions directory
+    global PYROGRAM_SESSIONS_DIR # sessions directory
 
     api_id, api_hash = itemgetter(
-            *(itemgetter("TELEGRAM_API_ID", "TELEGRAM_API_HASH")(client_data))
+            *(itemgetter("telegram_api_id", "telegram_api_hash")(client_data))
         )(os.environ)
-    if bot_token := client_data.get("TELEGRAM_BOT_TOKEN"):
+    if bot_token := client_data.get("telegram_bot_token"):
         bot_token = os.environ.get(bot_token)
 
     client = pyrogram.Client(
@@ -73,7 +74,7 @@ def client_create(session_name: str, client_data: ClientConfigData) -> ClientSto
         api_hash,
         bot_token=bot_token,
         plugins=client_data["plugins"],
-        workdir=pyrogram_sessions_dir,
+        workdir=PYROGRAM_SESSIONS_DIR,
     )
     return ClientStore(session_name, client)
 
